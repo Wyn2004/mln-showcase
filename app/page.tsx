@@ -51,6 +51,11 @@ export default function Home() {
               Giá Trị Thặng Dư
             </Button>
           </Link>
+          <Link href="/so-sanh-tbcn-xhcn">
+            <Button variant="outline" size="lg" className="text-lg px-8 py-3 bg-red-600 text-white hover:bg-red-700 border-red-700">
+              So Sánh TBCN & XHCN
+            </Button>
+          </Link>
         </motion.div>
       </motion.section>
 
