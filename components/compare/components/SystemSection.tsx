@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Section } from "../data/data";
-import Image from "next/image";
+// using plain <img> for predictable object-fit behavior inside the card
 import {
   Accordion,
   AccordionContent,
@@ -54,18 +54,26 @@ export default function SystemSection({ title, sections, color, images }: System
 
           {/* Images Carousel */}
           <div className="mb-12 flex justify-center">
-            <Carousel className="w-full max-w-md">
+            {/* Make carousel wider: increase max width and allow larger images on md+ */}
+            <Carousel className="w-full max-w-4xl">
               <CarouselContent>
                 {images.map((img, idx) => (
                   <CarouselItem key={idx}>
-                    <Card className={`border-8 ${borderColor}`} style={{ boxShadow: `12px 12px 0px ${shadowColor}` }}>
-                      <CardContent className="p-0">
-                        <div className="relative w-full h-64 md:h-80">
-                          <Image
+                    <Card
+                      className={`border-8 ${borderColor} bg-transparent p-0 overflow-hidden rounded-2xl`}
+                      style={{ boxShadow: `12px 12px 0px ${shadowColor}`, background: 'transparent' }}
+                    >
+                      <CardContent className="p-0 bg-transparent" style={{ background: 'transparent' }}>
+                        {/* larger image: use consistent aspect ratio so images always cover the card */}
+                        <div
+                          className="w-full aspect-video md:aspect-[16/9] overflow-hidden"
+                          style={{ aspectRatio: '16/9' }}
+                        >
+                          <img
                             src={img}
                             alt={`${title} illustration ${idx + 1}`}
-                            fill
-                            className="object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                            className="w-full h-full object-cover block grayscale hover:grayscale-0 transition-all duration-300"
+                            style={{ display: 'block' }}
                           />
                         </div>
                       </CardContent>

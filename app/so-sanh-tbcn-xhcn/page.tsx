@@ -23,9 +23,9 @@ export default function ComparePage() {
         sections={capitalismSections}
         color="red"
         images={[
-          "/images/lummi/mln3.png",
-          "/images/lummi/mln4.png",
-          "/images/lummi/mln5.png"
+          "/images/compare/anh1.png",
+          "/images/compare/anh2.png",
+          "/images/compare/anh3.png"
         ]}
       />
 
