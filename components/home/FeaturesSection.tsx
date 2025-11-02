@@ -3,7 +3,8 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartLine, Settings } from "lucide-react";
+import { ChartLine, Settings, TrendingUp } from "lucide-react";
+import Link from "next/link";
 
 export default function FeaturesSection() {
   return (
@@ -27,7 +28,7 @@ export default function FeaturesSection() {
           <div className="h-1 w-32 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -136,6 +137,60 @@ export default function FeaturesSection() {
                 </div>
               </CardContent>
             </Card>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <Link href="/quy-luat-gia-tri">
+              <Card className="h-full bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border-2 border-blue-700/30 shadow-2xl hover:border-blue-600/50 transition-all cursor-pointer hover:scale-105">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-blue-400 mb-2 flex items-center gap-3">
+                    <TrendingUp className="w-7 h-7" />
+                    Quy Luật Giá Trị
+                  </CardTitle>
+                  <div className="h-0.5 w-16 bg-blue-500" />
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-semibold text-lg text-amber-200 mb-2">
+                        Khái Niệm Cốt Lõi
+                      </h4>
+                      <p className="text-slate-300 text-sm leading-relaxed">
+                        Quy luật giá trị là quy luật kinh tế cơ bản của sản xuất hàng hóa, quy định việc sản xuất và
+                        trao đổi hàng hóa phải căn cứ vào hao phí lao động xã hội cần thiết.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-lg text-amber-200 mb-2">
+                        Các Yếu Tố (L, P, D, Q)
+                      </h4>
+                      <p className="text-slate-300 text-sm leading-relaxed">
+                        <strong className="text-blue-300">L</strong>: Lao động xã hội cần thiết<br />
+                        <strong className="text-blue-300">P</strong>: Phức tạp lao động<br />
+                        <strong className="text-blue-300">D</strong>: Cường độ lao động<br />
+                        <strong className="text-blue-300">Q</strong>: Năng suất lao động
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-lg text-amber-200 mb-2">
+                        Cơ Chế Hoạt Động
+                      </h4>
+                      <p className="text-slate-300 text-sm leading-relaxed">
+                        Giá cả dao động xoay quanh trục giá trị dưới tác động của quan hệ cung-cầu,
+                        điều tiết sản xuất và phân phối trong nền kinh tế thị trường.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           </motion.div>
         </div>
       </div>
