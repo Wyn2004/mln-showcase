@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartLine, Settings, TrendingUp } from "lucide-react";
+import { ChartLine, Settings, TrendingUp, Gamepad2 } from "lucide-react";
 import Link from "next/link";
 
 export default function FeaturesSection() {
@@ -28,7 +28,7 @@ export default function FeaturesSection() {
           <div className="h-1 w-32 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -185,6 +185,61 @@ export default function FeaturesSection() {
                       <p className="text-slate-300 text-sm leading-relaxed">
                         Giá cả dao động xoay quanh trục giá trị dưới tác động của quan hệ cung-cầu,
                         điều tiết sản xuất và phân phối trong nền kinh tế thị trường.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <Link href="/game">
+              <Card className="h-full bg-gradient-to-br from-yellow-900/80 to-orange-900/80 backdrop-blur-sm border-2 border-yellow-600/50 shadow-2xl hover:border-yellow-500/70 transition-all cursor-pointer hover:scale-105 relative overflow-hidden">
+                <div className="absolute top-0 right-0 bg-yellow-500 text-red-900 px-4 py-1 text-xs font-bold rounded-bl-lg">
+                  MỚI!
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-2xl text-yellow-400 mb-2 flex items-center gap-3">
+                    <Gamepad2 className="w-7 h-7" />
+                    Factory Shift Game
+                  </CardTitle>
+                  <div className="h-0.5 w-16 bg-yellow-500" />
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-semibold text-lg text-amber-200 mb-2">
+                        🎮 Học Qua Chơi
+                      </h4>
+                      <p className="text-slate-300 text-sm leading-relaxed">
+                        Trải nghiệm game mô phỏng quản lý dây chuyền sản xuất. Học cách tính toán
+                        giá trị thặng dư (s), tỷ suất thặng dư (m'), và tỷ suất lợi nhuận (p') một cách trực quan.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-lg text-amber-200 mb-2">
+                        🏭 Quản Lý Sản Xuất
+                      </h4>
+                      <p className="text-slate-300 text-sm leading-relaxed">
+                        Điều chỉnh số công nhân, năng suất, tư bản để đạt mục tiêu. Hiểu rõ mối quan hệ
+                        giữa các yếu tố L, P, D, Q và ảnh hưởng của chúng đến giá trị hàng hóa.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-lg text-amber-200 mb-2">
+                        🏆 Thách Thức & Xếp Hạng
+                      </h4>
+                      <p className="text-slate-300 text-sm leading-relaxed">
+                        3 cấp độ khó tăng dần, hệ thống điểm và bảng xếp hạng. Cạnh tranh với bạn bè
+                        để trở thành nhà quản lý dây chuyền giỏi nhất!
                       </p>
                     </div>
                   </div>
