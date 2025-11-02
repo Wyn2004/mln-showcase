@@ -30,11 +30,11 @@ export class FactoryScene extends Phaser.Scene {
     private conveyorOffset: number = 0;
     private products: Phaser.GameObjects.Rectangle[] = [];
     private productionTimer: number = 0;
-    
+
     // NEW: Game features
     private randomEventTimer: number = 0;
     private activeEvent?: {
-        type: 'accident' | 'strike' | 'bonus' | 'maintenance';
+        type: "accident" | "strike" | "bonus" | "maintenance";
         duration: number;
         effect: number;
         message: string;
@@ -129,25 +129,32 @@ export class FactoryScene extends Phaser.Scene {
 
     private createUpgradeShop() {
         const { width, height } = this.cameras.main;
-        // Move shop higher to avoid covering instruction text
-        const shopY = height - 80;
-        const shopX = width - 80; // Move left a bit
-        
-        // Background for upgrade shop (smaller)
-        const shopBg = this.add.rectangle(shopX, shopY, 160, 70, 0x2d2d44, 0.9);
+        const shopY = height - 50;
+
+        // Background for upgrade shop
+        const shopBg = this.add.rectangle(
+            width - 80,
+            shopY,
+            160,
+            80,
+            0x2d2d44,
+            0.9
+        );
         shopBg.setStrokeStyle(2, 0xffd700);
-        
-        this.add.text(shopX, shopY - 28, "🏪 NÂNG CẤP", {
-            fontSize: "12px",
-            color: "#ffd700",
-            fontStyle: "bold",
-        }).setOrigin(0.5);
+
+        this.add
+            .text(width - 85, shopY - 30, "🏪 NÂNG CẤP", {
+                fontSize: "14px",
+                color: "#ffd700",
+                fontStyle: "bold",
+            })
+            .setOrigin(0.5);
 
         // Upgrade buttons
         this.availableUpgrades = [
             {
-                id: 'speed',
-                name: '⚡ +0.5 Năng suất',
+                id: "speed",
+                name: "⚡ +0.5 Năng suất",
                 cost: 50,
                 effect: () => {
                     this.gameData.productivity = Math.min(
@@ -156,12 +163,12 @@ export class FactoryScene extends Phaser.Scene {
                     );
                     this.updateGameData();
                 },
-                x: shopX - 60,
+                x: width - 130,
                 y: shopY,
             },
             {
-                id: 'workers',
-                name: '👷 +1 Công nhân',
+                id: "workers",
+                name: "👷 +1 Công nhân",
                 cost: 100,
                 effect: () => {
                     if (this.workers.length < 15) {
@@ -169,19 +176,19 @@ export class FactoryScene extends Phaser.Scene {
                         // Update gameData.workers is handled in addNewWorker
                     }
                 },
-                x: shopX,
+                x: width - 80,
                 y: shopY,
             },
             {
-                id: 'capital',
-                name: '💰 +20 Vốn',
+                id: "capital",
+                name: "💰 +20 Vốn",
                 cost: 80,
                 effect: () => {
                     this.gameData.variableCapital += 20;
                     this.gameData.constantCapital += 20;
                     this.updateGameData();
                 },
-                x: shopX + 60,
+                x: width - 30,
                 y: shopY,
             },
         ];
@@ -189,35 +196,32 @@ export class FactoryScene extends Phaser.Scene {
         this.availableUpgrades.forEach((upgrade, index) => {
             const button = this.add.rectangle(
                 upgrade.x,
-                upgrade.y + 12,
-                60,
-                22,
+                upgrade.y + 15,
+                40,
+                25,
                 0x00aa00
             );
             button.setStrokeStyle(2, 0xffffff);
             button.setInteractive({ useHandCursor: true });
-            button.setData('upgrade', upgrade);
-            
-            const buttonText = this.add.text(
-                upgrade.x,
-                upgrade.y + 12,
-                `${upgrade.cost}💰`,
-                {
-                    fontSize: "10px",
+            button.setData("upgrade", upgrade);
+
+            const buttonText = this.add
+                .text(upgrade.x, upgrade.y + 15, `${upgrade.cost}💰`, {
+                    fontSize: "11px",
                     color: "#ffffff",
                     fontStyle: "bold",
-                }
-            ).setOrigin(0.5);
+                })
+                .setOrigin(0.5);
 
-            button.on('pointerover', () => {
+            button.on("pointerover", () => {
                 button.setFillStyle(0x00ff00);
                 button.setScale(1.1);
             });
-            button.on('pointerout', () => {
+            button.on("pointerout", () => {
                 button.setFillStyle(0x00aa00);
                 button.setScale(1);
             });
-            button.on('pointerdown', () => {
+            button.on("pointerdown", () => {
                 this.purchaseUpgrade(upgrade, button, buttonText);
             });
 
@@ -226,7 +230,7 @@ export class FactoryScene extends Phaser.Scene {
     }
 
     private purchaseUpgrade(
-        upgrade: typeof this.availableUpgrades[0],
+        upgrade: (typeof this.availableUpgrades)[0],
         button: Phaser.GameObjects.Rectangle,
         buttonText: Phaser.GameObjects.Text
     ) {
@@ -234,7 +238,7 @@ export class FactoryScene extends Phaser.Scene {
             this.gameData.accumulatedOutput -= upgrade.cost; // Deduct from accumulated
             this.gameData.accumulatedSurplus -= upgrade.cost;
             upgrade.effect();
-            
+
             // Visual feedback
             this.tweens.add({
                 targets: button,
@@ -246,9 +250,9 @@ export class FactoryScene extends Phaser.Scene {
 
             // Show success message
             const msg = this.add
-                .text(button.x, button.y - 30, '✓', {
-                    fontSize: '20px',
-                    color: '#00ff00',
+                .text(button.x, button.y - 30, "✓", {
+                    fontSize: "20px",
+                    color: "#00ff00",
                 })
                 .setOrigin(0.5);
             this.tweens.add({
@@ -275,22 +279,25 @@ export class FactoryScene extends Phaser.Scene {
         const { width, height } = this.cameras.main;
         const poolY = 80;
         const x = 100 + this.workers.length * 80;
-        
+
         // If too many workers, place them in a new row
-        const actualX = this.workers.length < 10 ? x : 100 + (this.workers.length - 10) * 80;
+        const actualX =
+            this.workers.length < 10
+                ? x
+                : 100 + (this.workers.length - 10) * 80;
         const actualY = this.workers.length < 10 ? poolY : poolY + 60;
-        
-        const worker = this.add.sprite(actualX, actualY, 'worker');
+
+        const worker = this.add.sprite(actualX, actualY, "worker");
         worker.setDisplaySize(50, 50);
         worker.setInteractive({ draggable: true });
-        worker.setData('workerId', this.workers.length);
-        worker.setData('assigned', false);
-        worker.setData('homeX', actualX);
-        worker.setData('homeY', actualY);
+        worker.setData("workerId", this.workers.length);
+        worker.setData("assigned", false);
+        worker.setData("homeX", actualX);
+        worker.setData("homeY", actualY);
         this.workers.push(worker);
 
         this.input.setDraggable(worker);
-        
+
         // Animate appearance
         worker.setAlpha(0);
         worker.setScale(0);
@@ -300,9 +307,9 @@ export class FactoryScene extends Phaser.Scene {
             scaleX: 1,
             scaleY: 1,
             duration: 500,
-            ease: 'Back.easeOut',
+            ease: "Back.easeOut",
         });
-        
+
         // Note: gameData.workers is updated automatically via getAssignedWorkersCount()
         // when workers are assigned/unassigned, but total worker count doesn't change
         // This upgrade adds a new worker sprite but doesn't affect gameData.workers directly
@@ -313,9 +320,12 @@ export class FactoryScene extends Phaser.Scene {
         if (this.gameData.timeRemaining <= 0) return;
 
         this.randomEventTimer++;
-        
+
         // Trigger random event every 25-35 seconds
-        if (!this.activeEvent && this.randomEventTimer >= 25 + Math.random() * 10) {
+        if (
+            !this.activeEvent &&
+            this.randomEventTimer >= 25 + Math.random() * 10
+        ) {
             this.triggerRandomEvent();
             this.randomEventTimer = 0;
         }
@@ -334,28 +344,28 @@ export class FactoryScene extends Phaser.Scene {
     private triggerRandomEvent() {
         const events = [
             {
-                type: 'accident' as const,
+                type: "accident" as const,
                 duration: 3,
                 effect: -0.3,
-                message: '⚠️ TAI NẠN! Năng suất -30% trong 3s',
+                message: "⚠️ TAI NẠN! Năng suất -30% trong 3s",
             },
             {
-                type: 'strike' as const,
+                type: "strike" as const,
                 duration: 5,
                 effect: -0.5,
-                message: '🚫 ĐÌNH CÔNG! Năng suất -50% trong 5s',
+                message: "🚫 ĐÌNH CÔNG! Năng suất -50% trong 5s",
             },
             {
-                type: 'bonus' as const,
-                duration: 5,
+                type: "bonus" as const,
+                duration: 3,
                 effect: 0.5,
-                message: '🎉 BONUS! Năng suất +50% trong 5s',
+                message: "🎉 BONUS! Năng suất +50% trong 3s",
             },
             {
-                type: 'maintenance' as const,
-                duration: 2,
+                type: "maintenance" as const,
+                duration: 5,
                 effect: -0.2,
-                message: '🔧 BẢO TRÌ! Năng suất -20% trong 2s',
+                message: "🔧 BẢO TRÌ! Năng suất -20% trong 5s",
             },
         ];
 
@@ -366,11 +376,11 @@ export class FactoryScene extends Phaser.Scene {
         const { width, height } = this.cameras.main;
         if (!this.eventText) {
             this.eventText = this.add
-                .text(width / 2, 50, '', {
-                    fontSize: '18px',
-                    color: '#ffff00',
-                    fontStyle: 'bold',
-                    backgroundColor: '#000000',
+                .text(width / 2, 50, "", {
+                    fontSize: "18px",
+                    color: "#ffff00",
+                    fontStyle: "bold",
+                    backgroundColor: "#000000",
                     padding: { x: 10, y: 5 },
                 })
                 .setOrigin(0.5);
@@ -760,27 +770,27 @@ export class FactoryScene extends Phaser.Scene {
             })
             .setOrigin(1, 0);
 
-        // Stats panel - moved to very top-left, smaller font to not cover workers
+        // Stats panel - moved further left to avoid covering workers
         this.statsText = this.add
             .text(2, -5, "", {
-                fontSize: "12px", // Smaller to fit better
+                fontSize: "12px", // Slightly smaller
                 color: "#ffffff",
                 backgroundColor: "#000000",
-                padding: { x: 6, y: 3 },
+                padding: { x: 8, y: 4 },
             })
             .setOrigin(0);
 
         // Progress bar
         this.progressBar = this.add.graphics();
 
-        // Instructions - moved higher to avoid upgrade shop
+        // Instructions
         this.add
             .text(
                 width / 2,
-                height - 25,
-                "💡 Mẹo: Kéo công nhân vào máy | Điều chỉnh sliders bên dưới",
+                height - 50,
+                "💡 Mẹo: Kéo công nhân vào máy để tăng sản xuất | Điều chỉnh sliders bên dưới để tối ưu hóa",
                 {
-                    fontSize: "13px",
+                    fontSize: "12px",
                     color: "#ffd700",
                     backgroundColor: "#000000",
                     padding: { x: 10, y: 5 },
@@ -888,10 +898,10 @@ export class FactoryScene extends Phaser.Scene {
             this.gameData.accumulatedSurplus / this.gameData.targetSurplus,
             1
         );
-        const barWidth = 250; // Smaller to not overlap
-        const barHeight = 18;
-        const barX = 2; // Match stats panel position
-        const barY = 130; // Moved up to avoid workers
+        const barWidth = 300;
+        const barHeight = 20;
+        const barX = 0; // Moved left to match stats panel
+        const barY = 150;
 
         this.progressBar.fillStyle(0x333333);
         this.progressBar.fillRect(barX, barY, barWidth, barHeight);

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import * as Phaser from "phaser";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -10,7 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { TrendingUp, DollarSign, Award, X } from "lucide-react";
 import { calculateGameOutputs, calculateScore, GAME_LEVELS } from "@/lib/game/gameLogic";
 import { useGameStore } from "@/lib/store/gameStore";
-import { FactoryScene, GameData } from "@/lib/game/FactoryScene";
+// Phaser and FactoryScene are dynamically imported at runtime inside useEffect
+// to avoid referencing browser-only globals (navigator/window) during SSR.
 
 interface GameCanvasProps {
   level: number;
@@ -22,12 +22,12 @@ export default function GameCanvas({ level, onGameEnd, onBack }: GameCanvasProps
   const { addScore, incrementGamesPlayed } = useGameStore();
   const gameLevel = GAME_LEVELS.find((l) => l.level === level) || GAME_LEVELS[0];
 
-  const gameRef = useRef<Phaser.Game | null>(null);
-  const sceneRef = useRef<FactoryScene | null>(null);
+  const gameRef = useRef<any | null>(null);
+  const sceneRef = useRef<any | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isUserUpdateRef = useRef(false); // Flag to prevent loop between user updates and scene updates
 
-  const [gameData, setGameData] = useState<GameData>({
+  const [gameData, setGameData] = useState<any>({
     workers: 0,
     productivity: gameLevel.initialProductivity,
     constantCapital: gameLevel.initialC,
@@ -45,66 +45,76 @@ export default function GameCanvas({ level, onGameEnd, onBack }: GameCanvasProps
   useEffect(() => {
     if (!containerRef.current || gameRef.current) return;
 
-    const createWorkerTexture = (scene: Phaser.Scene) => {
-      const graphics = scene.make.graphics({ x: 0, y: 0, add: false });
-      graphics.fillStyle(0xffd700);
-      graphics.fillCircle(25, 25, 25);
-      graphics.fillStyle(0x000000);
-      graphics.fillCircle(15, 20, 5);
-      graphics.fillCircle(35, 20, 5);
-      graphics.lineStyle(3, 0x000000);
-      graphics.arc(25, 30, 10, 0, Math.PI);
-      graphics.strokePath();
-      graphics.generateTexture('worker', 50, 50);
-      graphics.destroy();
-    };
+    let mounted = true;
 
-    const createParticleTexture = (scene: Phaser.Scene) => {
-      const graphics = scene.make.graphics({ x: 0, y: 0, add: false });
-      graphics.fillStyle(0xffd700);
-      graphics.fillCircle(8, 8, 8);
-      graphics.generateTexture('particle', 16, 16);
-      graphics.destroy();
-    };
+    (async () => {
+      // dynamic import so SSR doesn't evaluate phaser or any navigator-dependent code
+      const Phaser = await import('phaser');
+      const mod = await import('@/lib/game/FactoryScene');
+      const FactoryScene = mod.FactoryScene;
 
-    const config: Phaser.Types.Core.GameConfig = {
-      type: Phaser.AUTO,
-      parent: containerRef.current,
-      width: 1000,
-      height: 600,
-      backgroundColor: '#1a1a2e',
-      scene: {
-        key: 'FactoryScene',
-        create: function (this: Phaser.Scene) {
-          createWorkerTexture(this);
-          createParticleTexture(this);
+      const createWorkerTexture = (scene: any) => {
+        const graphics = scene.make.graphics({ x: 0, y: 0 });
+        graphics.fillStyle(0xffd700);
+        graphics.fillCircle(25, 25, 25);
+        graphics.fillStyle(0x000000);
+        graphics.fillCircle(15, 20, 5);
+        graphics.fillCircle(35, 20, 5);
+        graphics.lineStyle(3, 0x000000);
+        graphics.arc(25, 30, 10, 0, Math.PI);
+        graphics.strokePath();
+        graphics.generateTexture('worker', 50, 50);
+        graphics.destroy();
+      };
 
-          const factoryScene = new FactoryScene();
-          this.scene.add('Factory', factoryScene, true, {
-            gameData: gameData,
-            onUpdate: (data: GameData) => {
-              // Only update if NOT from user input (to avoid loops)
-              if (!isUserUpdateRef.current) {
-                setGameData(data);
-              }
-            },
-            onGameEnd: () => setShowResult(true),
-          });
-          this.scene.remove('FactoryScene');
-          sceneRef.current = factoryScene;
-        }
-      },
-      physics: {
-        default: 'arcade',
-        arcade: { gravity: { x: 0, y: 0 }, debug: false },
-      },
-    };
+      const createParticleTexture = (scene: any) => {
+        const graphics = scene.make.graphics({ x: 0, y: 0 });
+        graphics.fillStyle(0xffd700);
+        graphics.fillCircle(8, 8, 8);
+        graphics.generateTexture('particle', 16, 16);
+        graphics.destroy();
+      };
 
-    gameRef.current = new Phaser.Game(config);
+      const config: any = {
+        type: Phaser.AUTO,
+        parent: containerRef.current,
+        width: 1000,
+        height: 600,
+        backgroundColor: '#1a1a2e',
+        scene: {
+          key: 'FactoryScene',
+          create: function (this: any) {
+            createWorkerTexture(this);
+            createParticleTexture(this);
+
+            const factoryScene = new FactoryScene();
+            this.scene.add('Factory', factoryScene, true, {
+              gameData: gameData,
+              onUpdate: (data: any) => {
+                if (!isUserUpdateRef.current) {
+                  setGameData(data);
+                }
+              },
+              onGameEnd: () => setShowResult(true),
+            });
+            this.scene.remove('FactoryScene');
+            sceneRef.current = factoryScene;
+          }
+        },
+        physics: {
+          default: 'arcade',
+          arcade: { gravity: { x: 0, y: 0 }, debug: false },
+        },
+      };
+
+      if (!mounted) return;
+      gameRef.current = new Phaser.Game(config);
+    })();
 
     return () => {
+      mounted = false;
       if (gameRef.current) {
-        gameRef.current.destroy(true);
+        try { gameRef.current.destroy(true); } catch (_) { }
         gameRef.current = null;
       }
     };
@@ -115,7 +125,7 @@ export default function GameCanvas({ level, onGameEnd, onBack }: GameCanvasProps
     if (sceneRef.current && gameRef.current) {
       // Mark as user update to prevent feedback loop
       isUserUpdateRef.current = true;
-      
+
       // Update scene with latest gameData
       if (typeof sceneRef.current.setProductivity === 'function') {
         sceneRef.current.setProductivity(gameData.productivity);
@@ -129,7 +139,7 @@ export default function GameCanvas({ level, onGameEnd, onBack }: GameCanvasProps
       if (typeof sceneRef.current.setVariableCapital === 'function') {
         sceneRef.current.setVariableCapital(gameData.variableCapital);
       }
-      
+
       // Reset flag after a short delay
       setTimeout(() => {
         isUserUpdateRef.current = false;
@@ -226,7 +236,7 @@ export default function GameCanvas({ level, onGameEnd, onBack }: GameCanvasProps
                   try {
                     const newValue = v[0];
                     isUserUpdateRef.current = true;
-                    setGameData(prev => ({ ...prev, productivity: newValue }));
+                    setGameData((prev: any) => ({ ...prev, productivity: newValue }));
                     if (sceneRef.current && typeof sceneRef.current.setProductivity === 'function') {
                       sceneRef.current.setProductivity(newValue);
                     }
@@ -254,7 +264,7 @@ export default function GameCanvas({ level, onGameEnd, onBack }: GameCanvasProps
                   try {
                     const newValue = v[0] / 100;
                     isUserUpdateRef.current = true;
-                    setGameData(prev => ({ ...prev, workRatio: newValue }));
+                    setGameData((prev: any) => ({ ...prev, workRatio: newValue }));
                     if (sceneRef.current && typeof sceneRef.current.setWorkRatio === 'function') {
                       sceneRef.current.setWorkRatio(newValue);
                     }
@@ -283,7 +293,7 @@ export default function GameCanvas({ level, onGameEnd, onBack }: GameCanvasProps
                   try {
                     const v = parseFloat(e.target.value) || 0;
                     isUserUpdateRef.current = true;
-                    setGameData(prev => ({ ...prev, constantCapital: v }));
+                    setGameData((prev: any) => ({ ...prev, constantCapital: v }));
                     if (sceneRef.current && typeof sceneRef.current.setConstantCapital === 'function') {
                       sceneRef.current.setConstantCapital(v);
                     }
@@ -310,7 +320,7 @@ export default function GameCanvas({ level, onGameEnd, onBack }: GameCanvasProps
                   try {
                     const v = parseFloat(e.target.value) || 0;
                     isUserUpdateRef.current = true;
-                    setGameData(prev => ({ ...prev, variableCapital: v }));
+                    setGameData((prev: any) => ({ ...prev, variableCapital: v }));
                     if (sceneRef.current && typeof sceneRef.current.setVariableCapital === 'function') {
                       sceneRef.current.setVariableCapital(v);
                     }
