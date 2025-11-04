@@ -12,41 +12,8 @@ export default function CallToActionSection() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
       viewport={{ once: false }}
-      className="relative bg-gradient-to-b from-slate-900 via-amber-950 to-slate-950 py-32 overflow-hidden"
+      className="relative py-32 overflow-hidden"
     >
-      {/* Decorative elements with parallax */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 0.1 }}
-        transition={{ duration: 2 }}
-        viewport={{ once: true }}
-        className="absolute inset-0"
-      >
-        <motion.div
-          className="absolute top-0 right-1/4 w-96 h-96 bg-amber-600 rounded-full blur-3xl"
-          animate={{
-            y: [0, 40, 0],
-            x: [0, -20, 0],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-0 left-1/4 w-96 h-96 bg-red-600 rounded-full blur-3xl"
-          animate={{
-            y: [0, -40, 0],
-            x: [0, 20, 0],
-          }}
-          transition={{
-            duration: 9,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      </motion.div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
         <motion.div

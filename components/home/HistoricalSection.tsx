@@ -10,7 +10,7 @@ export default function HistoricalSection() {
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1 }}
       viewport={{ once: false }}
-      className="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 py-32"
+      className="relative py-32"
     >
       <div className="container mx-auto px-4">
         <motion.div

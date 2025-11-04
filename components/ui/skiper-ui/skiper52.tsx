@@ -55,7 +55,7 @@ const Skiper52 = () => {
   ];
 
   return (
-    <div className="flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+    <div className="flex h-full w-full items-center justify-center overflow-hidden bg-[#130E07]">
       <HoverExpand_001 className="" images={images} />
     </div>
   );
