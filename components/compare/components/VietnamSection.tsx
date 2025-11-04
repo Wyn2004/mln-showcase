@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export default function VietnamSection() {
   return (
-    <section className="py-16 bg-gradient-to-b from-green-50 via-red-50 to-yellow-50 relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -47,10 +47,11 @@ export default function VietnamSection() {
               className="inline-block relative"
             >
               <div className="absolute -inset-4 bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 opacity-20 blur-xl"></div>
-              <h2 className="text-3xl md:text-4xl font-bold text-red-800 px-8 py-6 border-8 border-red-700 bg-yellow-100 relative"
+              <h2 className="text-3xl md:text-4xl font-bold text-amber-50 px-8 py-6 border-2 border-amber-600/50 bg-[#130E07]/90 backdrop-blur-sm relative"
                 style={{
                   fontFamily: "serif",
-                  boxShadow: "12px 12px 0px rgba(185, 28, 28, 0.3)"
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)",
+                  textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
                 }}>
                 {vietnamModel.title}
               </h2>
@@ -64,8 +65,8 @@ export default function VietnamSection() {
               initial={{ opacity: 0, y: 20, rotate: -3 }}
               whileInView={{ opacity: 1, y: 0, rotate: 0 }}
               viewport={{ once: true }}
-              className="relative w-48 h-48 md:w-64 md:h-64 border-8 border-red-700"
-              style={{ boxShadow: "10px 10px 0px rgba(185, 28, 28, 0.3)" }}
+              className="relative w-48 h-48 md:w-64 md:h-64 border-2 border-amber-700/50 rounded-lg overflow-hidden"
+              style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)" }}
             >
               <Image
                 src="/images/compare/download.png"
@@ -78,8 +79,8 @@ export default function VietnamSection() {
               initial={{ opacity: 0, y: 20, rotate: 3 }}
               whileInView={{ opacity: 1, y: 0, rotate: 0 }}
               viewport={{ once: true }}
-              className="relative w-48 h-48 md:w-64 md:h-64 border-8 border-yellow-600"
-              style={{ boxShadow: "10px 10px 0px rgba(161, 98, 7, 0.3)" }}
+              className="relative w-48 h-48 md:w-64 md:h-64 border-2 border-amber-700/50 rounded-lg overflow-hidden"
+              style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)" }}
             >
               <Image
                 src="/images/compare/download (3).png"
@@ -114,15 +115,11 @@ export default function VietnamSection() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-white border-8 border-red-600 p-6 md:p-8 relative"
+                  className="bg-[#130E07]/90 backdrop-blur-sm border-2 border-amber-600/50 p-6 md:p-8 relative"
                   style={{
-                    boxShadow: "12px 12px 0px rgba(185, 28, 28, 0.3)",
+                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  {/* Decorative Corner Stars */}
-                  <div className="absolute -top-4 -left-4 text-yellow-500 text-5xl">★</div>
-                  <div className="absolute -top-4 -right-4 text-yellow-500 text-5xl">★</div>
-
                   {/* Section Content */}
                   <div className="space-y-4">
                     {section.content.map((paragraph, pIndex) => (
@@ -131,11 +128,11 @@ export default function VietnamSection() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: pIndex * 0.1 }}
-                        className="flex items-start bg-amber-50 p-5 border-l-8 border-red-600"
-                        style={{ boxShadow: "4px 4px 0px rgba(185, 28, 28, 0.1)" }}
+                        className="flex items-start bg-[#1a1208]/60 p-5 border-l-2 border-amber-600/50"
+                        style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.4)" }}
                       >
-                        <span className="text-red-600 mr-3 mt-1 font-bold text-2xl">▸</span>
-                        <p className="text-gray-800 leading-relaxed flex-1 text-lg"
+                        <span className="text-amber-300 mr-3 mt-1 font-bold text-2xl">▸</span>
+                        <p className="text-amber-100 leading-relaxed flex-1 text-lg"
                           style={{ fontFamily: "serif", textAlign: "justify" }}>
                           {paragraph}
                         </p>
@@ -155,10 +152,11 @@ export default function VietnamSection() {
             className="mt-12"
           >
             <div className="text-center mb-8">
-              <h3 className="text-3xl md:text-4xl font-bold text-red-800 px-6 py-4 bg-yellow-100 border-8 border-red-600 inline-block"
+              <h3 className="text-3xl md:text-4xl font-bold text-amber-50 px-6 py-4 bg-[#130E07]/90 backdrop-blur-sm border-2 border-amber-600/50 inline-block"
                 style={{
                   fontFamily: "serif",
-                  boxShadow: "10px 10px 0px rgba(185, 28, 28, 0.4)"
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)",
+                  textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
                 }}>
                 NHỮNG THÁCH THỨC VÀ ĐỊNH HƯỚNG
               </h3>
@@ -178,21 +176,20 @@ export default function VietnamSection() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
-                      className="bg-gradient-to-br from-red-50 to-yellow-50 border-6 border-red-700 overflow-hidden"
+                      className="bg-[#130E07]/90 backdrop-blur-sm border-2 border-amber-600/50 overflow-hidden"
                       style={{
-                        boxShadow: "8px 8px 0px rgba(185, 28, 28, 0.3)",
-                        borderWidth: "6px"
+                        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)"
                       }}
                     >
-                      <CollapsibleTrigger className="w-full p-6 hover:bg-red-100 transition-colors">
+                      <CollapsibleTrigger className="w-full p-6 hover:bg-[#1a1208]/50 transition-colors">
                         <div className="flex items-center justify-between">
-                          <h4 className="text-xl font-bold text-red-700 flex items-center gap-3"
-                            style={{ fontFamily: "serif" }}>
-                            <AlertTriangle className="w-6 h-6 text-yellow-600" />
+                          <h4 className="text-xl font-bold text-amber-100 flex items-center gap-3"
+                            style={{ fontFamily: "serif", textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}>
+                            <AlertTriangle className="w-6 h-6 text-amber-300" />
                             {challenge.title}
                           </h4>
                           <ChevronDown
-                            className={`w-6 h-6 text-red-700 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                            className={`w-6 h-6 text-amber-300 transition-transform ${isOpen ? "rotate-180" : ""}`}
                           />
                         </div>
                       </CollapsibleTrigger>
@@ -202,20 +199,20 @@ export default function VietnamSection() {
                           animate={{ opacity: 1, y: 0 }}
                           className="px-6 pb-6 space-y-4"
                         >
-                          <p className="text-gray-800 leading-relaxed bg-white p-4 border-l-4 border-red-600"
+                          <p className="text-amber-100 leading-relaxed bg-[#1a1208]/60 p-4 border-l-2 border-amber-600/50"
                             style={{
                               fontFamily: "serif",
                               textAlign: "justify",
-                              boxShadow: "4px 4px 0px rgba(185, 28, 28, 0.1)"
+                              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.4)"
                             }}>
                             {challenge.description}
                           </p>
                           {challenge.solution && (
-                            <div className="bg-yellow-50 border-4 border-yellow-500 p-4"
-                              style={{ boxShadow: "4px 4px 0px rgba(161, 98, 7, 0.2)" }}>
-                              <p className="text-red-700 font-semibold flex items-start gap-2"
+                            <div className="bg-[#1a1208]/60 border border-amber-600/50 p-4"
+                              style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.4)" }}>
+                              <p className="text-amber-200 font-semibold flex items-start gap-2"
                                 style={{ fontFamily: "serif" }}>
-                                <span className="text-yellow-600 text-xl">→</span>
+                                <span className="text-amber-300 text-xl">→</span>
                                 <span>{challenge.solution}</span>
                               </p>
                             </div>

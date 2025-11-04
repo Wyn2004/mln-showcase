@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-red-900 via-red-800 to-amber-900 py-20">
+    <section className="relative overflow-hidden py-20">
       {/* Retro Pattern Background */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -38,9 +38,9 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mb-8"
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-yellow-300 mb-4 tracking-tight"
+            <h1 className="text-5xl md:text-7xl font-bold text-amber-50 mb-4 tracking-tight"
                 style={{ 
-                  textShadow: "4px 4px 0px rgba(0,0,0,0.3), 2px 2px 0px rgba(255,215,0,0.2)",
+                  textShadow: "2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(251, 191, 36, 0.3)",
                   fontFamily: "serif"
                 }}>
               SO SÁNH
@@ -50,18 +50,18 @@ export default function HeroSection() {
                 initial={{ x: -50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="text-3xl md:text-5xl font-bold text-white border-4 border-yellow-400 px-6 py-3 bg-red-700/50 backdrop-blur-sm"
-                style={{ fontFamily: "serif" }}
+                className="text-3xl md:text-5xl font-bold text-amber-50 border-2 border-amber-500/50 px-6 py-3 bg-[#130E07]/90 backdrop-blur-sm"
+                style={{ fontFamily: "serif", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
               >
                 TƯ BẢN CHỦ NGHĨA
               </motion.h2>
-              <span className="text-yellow-300 text-4xl font-bold">⚔</span>
+              <span className="text-amber-300 text-4xl font-bold">⚔</span>
               <motion.h2 
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="text-3xl md:text-5xl font-bold text-white border-4 border-yellow-400 px-6 py-3 bg-red-700/50 backdrop-blur-sm"
-                style={{ fontFamily: "serif" }}
+                className="text-3xl md:text-5xl font-bold text-amber-50 border-2 border-amber-500/50 px-6 py-3 bg-[#130E07]/90 backdrop-blur-sm"
+                style={{ fontFamily: "serif", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
               >
                 XÃ HỘI CHỦ NGHĨA
               </motion.h2>
@@ -73,8 +73,8 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="text-xl md:text-2xl text-yellow-100 max-w-4xl mx-auto leading-relaxed"
-            style={{ fontFamily: "serif" }}
+            className="text-xl md:text-2xl text-amber-100 max-w-4xl mx-auto leading-relaxed"
+            style={{ fontFamily: "serif", textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
           >
             Từ mâu thuẫn của tư bản đến khát vọng của xã hội chủ nghĩa
           </motion.p>
