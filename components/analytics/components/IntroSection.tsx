@@ -8,7 +8,7 @@ import { Lightbulb } from "lucide-react";
 
 export default function IntroSection() {
   return (
-    <section className="py-16 bg-gradient-to-b from-amber-50 to-white">
+    <section className="py-16">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -20,15 +20,14 @@ export default function IntroSection() {
           {/* Title */}
           <div className="text-center mb-12">
             <div className="inline-block relative">
-              <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-4 px-8 py-4 border-4 border-blue-600 bg-blue-50 relative"
+              <h2 className="text-3xl md:text-4xl font-bold text-amber-50 mb-4 px-8 py-4 border-2 border-amber-600/50 bg-[#130E07]/90 backdrop-blur-sm relative"
                   style={{ 
                     fontFamily: "serif",
-                    boxShadow: "8px 8px 0px rgba(37, 99, 235, 0.3)"
+                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)",
+                    textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
                   }}>
                 Tổng Quan về Quy Luật Giá Trị
               </h2>
-              <div className="absolute -top-3 -left-3 text-yellow-500 text-4xl">★</div>
-              <div className="absolute -bottom-3 -right-3 text-yellow-500 text-4xl">★</div>
             </div>
           </div>
 
@@ -39,13 +38,13 @@ export default function IntroSection() {
             viewport={{ once: true }}
             className="mb-8"
           >
-            <Alert className="border-4 border-blue-600 bg-blue-50"
-              style={{ boxShadow: "6px 6px 0px rgba(37, 99, 235, 0.3)" }}>
-              <Lightbulb className="h-5 w-5 text-blue-700" />
-              <AlertTitle className="text-blue-800 font-bold text-xl" style={{ fontFamily: "serif" }}>
+            <Alert className="border-2 border-amber-600/50 bg-[#130E07]/90 backdrop-blur-sm"
+              style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)" }}>
+              <Lightbulb className="h-5 w-5 text-amber-300" />
+              <AlertTitle className="text-amber-50 font-bold text-xl" style={{ fontFamily: "serif", textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}>
                 Khái niệm cốt lõi
               </AlertTitle>
-              <AlertDescription className="text-gray-800 text-base leading-relaxed" style={{ fontFamily: "serif" }}>
+              <AlertDescription className="text-amber-100 text-base leading-relaxed" style={{ fontFamily: "serif" }}>
                 Quy luật giá trị hoạt động như "bàn tay vô hình" điều tiết nền kinh tế thị trường.
                 Hãy tương tác với các phần tử để khám phá chi tiết!
               </AlertDescription>
@@ -53,24 +52,17 @@ export default function IntroSection() {
           </motion.div>
 
           {/* Content */}
-          <div className="bg-amber-50 border-4 border-amber-800 p-8 md:p-12 relative"
+          <div className="bg-[#130E07]/90 backdrop-blur-sm border-2 border-amber-600/50 p-8 md:p-12 relative"
             style={{
-              boxShadow: "12px 12px 0px rgba(146, 64, 14, 0.3)",
-              backgroundImage: `linear-gradient(to bottom, rgba(255,251,235,0.9), rgba(254,243,199,0.9))`
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)"
             }}>
-            
-            {/* Decorative corners */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-red-600"></div>
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-red-600"></div>
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-red-600"></div>
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-red-600"></div>
 
             <div className="grid md:grid-cols-2 gap-8 items-center">
               {/* Text */}
               <div>
-                <p className="text-lg leading-relaxed text-gray-800 text-justify"
+                <p className="text-lg leading-relaxed text-amber-100 text-justify"
                    style={{ fontFamily: "serif" }}>
-                  <span className="text-5xl font-bold text-blue-800 float-left mr-3 leading-none">Q</span>
+                  <span className="text-5xl font-bold text-amber-300 float-left mr-3 leading-none">Q</span>
                   {introduction.description}
                 </p>
               </div>
@@ -83,8 +75,8 @@ export default function IntroSection() {
                 transition={{ delay: 0.3 }}
                 className="relative"
               >
-                <div className="border-8 border-blue-600 relative overflow-hidden"
-                     style={{ boxShadow: "8px 8px 0px rgba(37, 99, 235, 0.4)" }}>
+                <div className="border-2 border-amber-600/50 relative overflow-hidden rounded-lg"
+                     style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)" }}>
                   <Image
                     src="/images/lummi/mln1.png"
                     alt="Quy luật giá trị"

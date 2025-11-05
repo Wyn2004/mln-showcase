@@ -12,38 +12,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export default function FactorsSection() {
-  const getColorClasses = (color: string) => {
-    const colors: Record<string, { bg: string; border: string; text: string; accent: string }> = {
-      red: {
-        bg: "bg-red-50",
-        border: "border-red-600",
-        text: "text-red-800",
-        accent: "bg-red-100"
-      },
-      blue: {
-        bg: "bg-blue-50",
-        border: "border-blue-600",
-        text: "text-blue-800",
-        accent: "bg-blue-100"
-      },
-      orange: {
-        bg: "bg-orange-50",
-        border: "border-orange-600",
-        text: "text-orange-800",
-        accent: "bg-orange-100"
-      },
-      green: {
-        bg: "bg-green-50",
-        border: "border-green-600",
-        text: "text-green-800",
-        accent: "bg-green-100"
-      }
-    };
-    return colors[color] || colors.blue;
-  };
 
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-slate-50">
+    <section className="py-16">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -54,15 +25,14 @@ export default function FactorsSection() {
           {/* Title */}
           <div className="text-center mb-12">
             <div className="inline-block relative">
-              <h2 className="text-3xl md:text-4xl font-bold text-indigo-800 mb-4 px-8 py-4 border-4 border-indigo-600 bg-indigo-50 relative"
+              <h2 className="text-3xl md:text-4xl font-bold text-amber-50 mb-4 px-8 py-4 border-2 border-amber-600/50 bg-[#130E07]/90 backdrop-blur-sm"
                   style={{ 
                     fontFamily: "serif",
-                    boxShadow: "8px 8px 0px rgba(79, 70, 229, 0.3)"
+                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)",
+                    textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
                   }}>
                 Các Yếu Tố Cấu Thành (L, P, D, Q)
               </h2>
-              <div className="absolute -top-3 -left-3 text-yellow-500 text-4xl">★</div>
-              <div className="absolute -bottom-3 -right-3 text-yellow-500 text-4xl">★</div>
             </div>
           </div>
 
@@ -74,7 +44,7 @@ export default function FactorsSection() {
             className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
           >
             {factors.map((factor, index) => {
-              const colors = getColorClasses(factor.color);
+              // const colors = getColorClasses(factor.color);
               return (
                 <motion.div
                   key={factor.id}
@@ -83,14 +53,13 @@ export default function FactorsSection() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className={`border-4 ${colors.border} ${colors.bg} hover:scale-105 transition-transform cursor-pointer`}
-                        style={{ boxShadow: "4px 4px 0px rgba(0,0,0,0.2)" }}>
+                  <Card className="border-2 border-amber-600/50 bg-[#130E07]/90 backdrop-blur-sm hover:bg-[#1a1208]/90 transition-colors cursor-pointer"
+                        style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.4)" }}>
                     <CardContent className="p-6 text-center">
-                      <div className="text-5xl mb-3">{factor.icon}</div>
-                      <div className={`text-3xl font-bold ${colors.text} mb-2`} style={{ fontFamily: "serif" }}>
+                      <div className="text-3xl font-bold text-amber-300 mb-2" style={{ fontFamily: "serif" }}>
                         {factor.symbol}
                       </div>
-                      <div className={`text-sm font-semibold ${colors.text}`}>
+                      <div className="text-sm font-semibold text-amber-100">
                         {factor.name}
                       </div>
                     </CardContent>
@@ -109,33 +78,31 @@ export default function FactorsSection() {
           >
             <Accordion type="multiple" className="space-y-6">
               {factors.map((factor) => {
-                const colors = getColorClasses(factor.color);
                 return (
                   <AccordionItem
                     key={factor.id}
                     value={factor.id}
-                    className={`border-4 ${colors.border} ${colors.bg} overflow-hidden`}
-                    style={{ boxShadow: "6px 6px 0px rgba(0,0,0,0.2)" }}
+                    className="border-2 border-amber-600/50 bg-[#130E07]/90 backdrop-blur-sm overflow-hidden"
+                    style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)" }}
                   >
                     <AccordionTrigger
-                      className={`px-6 md:px-8 py-6 hover:no-underline ${colors.accent} hover:bg-opacity-70 transition-colors`}
+                      className="px-6 md:px-8 py-6 hover:no-underline text-amber-100 hover:text-amber-50 hover:bg-[#1a1208]/50 transition-colors"
                     >
                       <div className="flex items-center gap-4 text-left w-full">
-                        <span className="text-4xl">{factor.icon}</span>
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-1">
-                            <Badge className={`text-2xl font-bold ${colors.bg} ${colors.text} border-2 ${colors.border}`}
+                            <Badge className="text-xl font-bold bg-amber-600/50 text-amber-100 border border-amber-500/50 px-3 py-1"
                                    style={{ fontFamily: "serif" }}>
                               {factor.symbol}
                             </Badge>
-                            <span className={`text-xl md:text-2xl font-bold ${colors.text}`} style={{ fontFamily: "serif" }}>
+                            <span className="text-xl md:text-2xl font-bold" style={{ fontFamily: "serif", textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}>
                               {factor.fullName}
                             </span>
                           </div>
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="px-6 md:px-8 py-6 bg-white">
+                    <AccordionContent className="px-6 md:px-8 py-6 bg-[#1a1208]/60">
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -143,34 +110,34 @@ export default function FactorsSection() {
                         className="space-y-4"
                       >
                         {/* Description */}
-                        <div className="bg-amber-50 border-l-4 border-amber-600 p-4">
-                          <h4 className="font-bold text-amber-900 mb-2" style={{ fontFamily: "serif" }}>
-                            📖 Định nghĩa:
+                        <div className="bg-[#130E07]/60 border-l-2 border-amber-600/50 p-4">
+                          <h4 className="font-bold text-amber-200 mb-2" style={{ fontFamily: "serif" }}>
+                            Định nghĩa:
                           </h4>
-                          <p className="text-gray-800 leading-relaxed" style={{ fontFamily: "serif" }}>
+                          <p className="text-amber-100 leading-relaxed" style={{ fontFamily: "serif" }}>
                             {factor.description}
                           </p>
                         </div>
 
                         {/* Relationship */}
-                        <div className={`${colors.accent} border-l-4 ${colors.border} p-4`}>
-                          <h4 className={`font-bold ${colors.text} mb-2`} style={{ fontFamily: "serif" }}>
-                            🔗 Quan hệ với giá trị:
+                        <div className="bg-[#130E07]/60 border-l-2 border-amber-600/50 p-4">
+                          <h4 className="font-bold text-amber-200 mb-2" style={{ fontFamily: "serif" }}>
+                            Quan hệ với giá trị:
                           </h4>
-                          <p className="text-gray-800 leading-relaxed" style={{ fontFamily: "serif" }}>
+                          <p className="text-amber-100 leading-relaxed" style={{ fontFamily: "serif" }}>
                             {factor.relationship}
                           </p>
                         </div>
 
                         {/* Examples */}
                         {factor.examples && factor.examples.length > 0 && (
-                          <div className="bg-green-50 border-l-4 border-green-600 p-4">
-                            <h4 className="font-bold text-green-900 mb-2" style={{ fontFamily: "serif" }}>
-                              💡 Ví dụ:
+                          <div className="bg-[#130E07]/60 border-l-2 border-amber-600/50 p-4">
+                            <h4 className="font-bold text-amber-200 mb-2" style={{ fontFamily: "serif" }}>
+                              Ví dụ:
                             </h4>
                             <ul className="space-y-1">
                               {factor.examples.map((example, idx) => (
-                                <li key={idx} className="text-gray-800" style={{ fontFamily: "serif" }}>
+                                <li key={idx} className="text-amber-100" style={{ fontFamily: "serif" }}>
                                   • {example}
                                 </li>
                               ))}

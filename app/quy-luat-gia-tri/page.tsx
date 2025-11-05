@@ -1,18 +1,27 @@
 "use client";
 
-import HeroSection from "@/components/analytics/components/HeroSection";
-import IntroSection from "@/components/analytics/components/IntroSection";
-import FactorsSection from "@/components/analytics/components/FactorsSection";
-import DiagramSection from "@/components/analytics/components/DiagramSection";
-import FormulasSection from "@/components/analytics/components/FormulasSection";
-import PriceValueSection from "@/components/analytics/components/PriceValueSection";
-import ExamplesSection from "@/components/analytics/components/ExamplesSection";
-import ImpactsSection from "@/components/analytics/components/ImpactsSection";
-import ConclusionSection from "@/components/analytics/components/ConclusionSection";
+import Image from "next/image";
+import {HeroSection, IntroSection, FactorsSection, DiagramSection, FormulasSection, PriceValueSection, ExamplesSection, ImpactsSection, ConclusionSection} from "@/components/analytics/components";
 
 export default function LawOfValuePage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background with image - applied to full page */}
+      <div className="fixed inset-0 -z-10">
+        <Image
+          src="/backgroud/bg.jpg"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+          quality={100}
+        />
+        {/* Dark overlay to darken the background */}
+        <div className="absolute inset-0 bg-black/70" />
+        {/* Additional vignette effect */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/50" />
+      </div>
+
       {/* Hero Section */}
       <HeroSection />
 

@@ -1,0 +1,9 @@
+export {default as HeroSection} from "./HeroSection";
+export {default as IntroSection} from "./IntroSection";
+export {default as FactorsSection} from "./FactorsSection";
+export {default as DiagramSection} from "./DiagramSection";
+export {default as FormulasSection} from "./FormulasSection";
+export {default as PriceValueSection} from "./PriceValueSection";
+export {default as ExamplesSection} from "./ExamplesSection";
+export {default as ImpactsSection} from "./ImpactsSection";
+export {default as ConclusionSection} from "./ConclusionSection";
