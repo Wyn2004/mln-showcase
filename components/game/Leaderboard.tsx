@@ -22,10 +22,10 @@ export default function Leaderboard() {
   };
 
   const getMedalIcon = (index: number) => {
-    if (index === 0) return <Trophy className="w-6 h-6 text-yellow-500" />;
-    if (index === 1) return <Medal className="w-6 h-6 text-gray-400" />;
-    if (index === 2) return <Award className="w-6 h-6 text-amber-600" />;
-    return <span className="w-6 h-6 flex items-center justify-center font-bold text-gray-500">#{index + 1}</span>;
+    if (index === 0) return <Trophy className="w-5 h-5 md:w-6 md:h-6 text-amber-400" />;
+    if (index === 1) return <Medal className="w-5 h-5 md:w-6 md:h-6 text-amber-300" />;
+    if (index === 2) return <Award className="w-5 h-5 md:w-6 md:h-6 text-amber-400" />;
+    return <span className="w-5 h-5 md:w-6 md:h-6 flex items-center justify-center font-bold text-amber-200/60">#{index + 1}</span>;
   };
 
   return (
@@ -36,37 +36,37 @@ export default function Leaderboard() {
     >
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-4 border-yellow-500 bg-gradient-to-br from-yellow-50 to-amber-50">
-          <CardContent className="p-6">
+        <Card className="border-2 border-amber-700/50 bg-[#130E07]/90 backdrop-blur-sm">
+          <CardContent className="p-4 md:p-6">
             <div className="flex items-center gap-3">
-              <Trophy className="w-12 h-12 text-yellow-600" />
+              <Trophy className="w-8 h-8 md:w-12 md:h-12 text-amber-400" />
               <div>
-                <p className="text-sm text-gray-600">Điểm Cao Nhất</p>
-                <p className="text-3xl font-bold text-yellow-700">{bestScore}</p>
+                <p className="text-xs md:text-sm text-amber-200/70">Điểm Cao Nhất</p>
+                <p className="text-2xl md:text-3xl font-bold text-amber-300">{bestScore}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-4 border-blue-500 bg-gradient-to-br from-blue-50 to-cyan-50">
-          <CardContent className="p-6">
+        <Card className="border-2 border-amber-700/50 bg-[#130E07]/90 backdrop-blur-sm">
+          <CardContent className="p-4 md:p-6">
             <div className="flex items-center gap-3">
-              <TrendingUp className="w-12 h-12 text-blue-600" />
+              <TrendingUp className="w-8 h-8 md:w-12 md:h-12 text-amber-400" />
               <div>
-                <p className="text-sm text-gray-600">Tổng Số Trận</p>
-                <p className="text-3xl font-bold text-blue-700">{totalGamesPlayed}</p>
+                <p className="text-xs md:text-sm text-amber-200/70">Tổng Số Trận</p>
+                <p className="text-2xl md:text-3xl font-bold text-amber-300">{totalGamesPlayed}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-4 border-purple-500 bg-gradient-to-br from-purple-50 to-pink-50">
-          <CardContent className="p-6">
+        <Card className="border-2 border-amber-700/50 bg-[#130E07]/90 backdrop-blur-sm">
+          <CardContent className="p-4 md:p-6">
             <div className="flex items-center gap-3">
-              <Award className="w-12 h-12 text-purple-600" />
+              <Award className="w-8 h-8 md:w-12 md:h-12 text-amber-400" />
               <div>
-                <p className="text-sm text-gray-600">Top Scores</p>
-                <p className="text-3xl font-bold text-purple-700">{highScores.length}</p>
+                <p className="text-xs md:text-sm text-amber-200/70">Top Scores</p>
+                <p className="text-2xl md:text-3xl font-bold text-amber-300">{highScores.length}</p>
               </div>
             </div>
           </CardContent>
@@ -74,11 +74,11 @@ export default function Leaderboard() {
       </div>
 
       {/* Leaderboard Table */}
-      <Card className="border-8 border-red-600 bg-gradient-to-br from-red-50 to-orange-50">
+      <Card className="border-2 border-amber-700/50 bg-[#130E07]/90 backdrop-blur-sm">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-3xl text-red-800 flex items-center gap-3">
-              <Trophy className="w-8 h-8" />
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <CardTitle className="text-2xl md:text-3xl text-amber-100 flex items-center gap-3">
+              <Trophy className="w-6 h-6 md:w-8 md:h-8" />
               Bảng Xếp Hạng
             </CardTitle>
             {highScores.length > 0 && (
@@ -86,7 +86,7 @@ export default function Leaderboard() {
                 variant="destructive"
                 size="sm"
                 onClick={resetScores}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 bg-amber-800/60 hover:bg-amber-700/80 text-amber-100 border-amber-700/50"
               >
                 <Trash2 className="w-4 h-4" />
                 Xóa Tất Cả
@@ -97,11 +97,11 @@ export default function Leaderboard() {
         <CardContent>
           {highScores.length === 0 ? (
             <div className="text-center py-12">
-              <Trophy className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-xl text-gray-500 font-medium">
+              <Trophy className="w-12 h-12 md:w-16 md:h-16 text-amber-400/50 mx-auto mb-4" />
+              <p className="text-lg md:text-xl text-amber-200/80 font-medium">
                 Chưa có điểm số nào
               </p>
-              <p className="text-sm text-gray-400 mt-2">
+              <p className="text-sm text-amber-200/60 mt-2">
                 Chơi game để ghi điểm vào bảng xếp hạng!
               </p>
             </div>
@@ -114,11 +114,11 @@ export default function Leaderboard() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
                   className={`
-                    bg-white p-4 rounded-lg border-4 flex items-center gap-4
-                    ${index === 0 ? "border-yellow-400 shadow-lg" : ""}
-                    ${index === 1 ? "border-gray-300" : ""}
-                    ${index === 2 ? "border-amber-400" : ""}
-                    ${index > 2 ? "border-gray-200" : ""}
+                    bg-[#1a1208]/60 p-4 rounded-lg border-2 flex items-center gap-4 backdrop-blur-sm
+                    ${index === 0 ? "border-amber-500/80 shadow-lg" : ""}
+                    ${index === 1 ? "border-amber-700/40" : ""}
+                    ${index === 2 ? "border-amber-600/50" : ""}
+                    ${index > 2 ? "border-amber-700/30" : ""}
                   `}
                 >
                   {/* Rank */}
@@ -129,18 +129,18 @@ export default function Leaderboard() {
                   {/* Score Info */}
                   <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-2">
                     <div>
-                      <p className="text-sm text-gray-600">Điểm Số</p>
-                      <p className="text-2xl font-bold text-red-700">{score.score}</p>
+                      <p className="text-xs md:text-sm text-amber-200/70">Điểm Số</p>
+                      <p className="text-xl md:text-2xl font-bold text-amber-300">{score.score}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600">Cấp Độ</p>
-                      <Badge variant="outline" className="text-base font-bold">
+                      <p className="text-xs md:text-sm text-amber-200/70">Cấp Độ</p>
+                      <Badge variant="outline" className="text-sm md:text-base font-bold border-amber-700/50 text-amber-300 bg-[#130E07]/60">
                         Level {score.level}
                       </Badge>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600">Thời Gian</p>
-                      <p className="text-sm font-medium text-gray-700">
+                      <p className="text-xs md:text-sm text-amber-200/70">Thời Gian</p>
+                      <p className="text-xs md:text-sm font-medium text-amber-200/80">
                         {formatDate(score.date)}
                       </p>
                     </div>
@@ -151,9 +151,9 @@ export default function Leaderboard() {
                     <div className="flex-shrink-0">
                       <Badge
                         className={`
-                          ${index === 0 ? "bg-yellow-500 text-white" : ""}
-                          ${index === 1 ? "bg-gray-400 text-white" : ""}
-                          ${index === 2 ? "bg-amber-600 text-white" : ""}
+                          ${index === 0 ? "bg-amber-500/80 text-amber-50" : ""}
+                          ${index === 1 ? "bg-amber-700/60 text-amber-100" : ""}
+                          ${index === 2 ? "bg-amber-600/70 text-amber-100" : ""}
                         `}
                       >
                         Top {index + 1}
@@ -169,32 +169,32 @@ export default function Leaderboard() {
 
       {/* Achievement Hints */}
       {highScores.length > 0 && (
-        <Card className="border-4 border-green-500 bg-gradient-to-br from-green-50 to-emerald-50">
+        <Card className="border-2 border-amber-700/50 bg-[#130E07]/90 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-2xl text-green-800">🎯 Thành Tích</CardTitle>
+            <CardTitle className="text-xl md:text-2xl text-amber-100">🎯 Thành Tích</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-green-300">
-              <span className="font-medium text-gray-700">Người Mới</span>
-              <Badge variant={totalGamesPlayed >= 1 ? "default" : "outline"}>
+            <div className="flex items-center justify-between p-3 bg-[#1a1208]/60 rounded-lg border-2 border-amber-700/30">
+              <span className="font-medium text-amber-200/80">Người Mới</span>
+              <Badge variant={totalGamesPlayed >= 1 ? "default" : "outline"} className={totalGamesPlayed >= 1 ? "bg-amber-700/80 text-amber-50" : "border-amber-700/50 text-amber-300"}>
                 {totalGamesPlayed >= 1 ? "✓ Hoàn Thành" : "Chơi 1 trận"}
               </Badge>
             </div>
-            <div className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-green-300">
-              <span className="font-medium text-gray-700">Người Chơi Thường Xuyên</span>
-              <Badge variant={totalGamesPlayed >= 10 ? "default" : "outline"}>
+            <div className="flex items-center justify-between p-3 bg-[#1a1208]/60 rounded-lg border-2 border-amber-700/30">
+              <span className="font-medium text-amber-200/80">Người Chơi Thường Xuyên</span>
+              <Badge variant={totalGamesPlayed >= 10 ? "default" : "outline"} className={totalGamesPlayed >= 10 ? "bg-amber-700/80 text-amber-50" : "border-amber-700/50 text-amber-300"}>
                 {totalGamesPlayed >= 10 ? "✓ Hoàn Thành" : `${totalGamesPlayed}/10 trận`}
               </Badge>
             </div>
-            <div className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-green-300">
-              <span className="font-medium text-gray-700">Cao Thủ</span>
-              <Badge variant={bestScore >= 200 ? "default" : "outline"}>
+            <div className="flex items-center justify-between p-3 bg-[#1a1208]/60 rounded-lg border-2 border-amber-700/30">
+              <span className="font-medium text-amber-200/80">Cao Thủ</span>
+              <Badge variant={bestScore >= 200 ? "default" : "outline"} className={bestScore >= 200 ? "bg-amber-700/80 text-amber-50" : "border-amber-700/50 text-amber-300"}>
                 {bestScore >= 200 ? "✓ Hoàn Thành" : `${bestScore}/200 điểm`}
               </Badge>
             </div>
-            <div className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-green-300">
-              <span className="font-medium text-gray-700">Huyền Thoại</span>
-              <Badge variant={bestScore >= 300 ? "default" : "outline"}>
+            <div className="flex items-center justify-between p-3 bg-[#1a1208]/60 rounded-lg border-2 border-amber-700/30">
+              <span className="font-medium text-amber-200/80">Huyền Thoại</span>
+              <Badge variant={bestScore >= 300 ? "default" : "outline"} className={bestScore >= 300 ? "bg-amber-700/80 text-amber-50" : "border-amber-700/50 text-amber-300"}>
                 {bestScore >= 300 ? "✓ Hoàn Thành" : `${bestScore}/300 điểm`}
               </Badge>
             </div>
