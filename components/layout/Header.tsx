@@ -48,6 +48,12 @@ export default function Header() {
                         <Link href="/so-sanh-tbcn-xhcn" className="text-white hover:text-yellow-200 transition-colors font-medium">
                             So Sánh TBCN & XHCN
                         </Link>
+                        <Link href="/quy-luat-gia-tri" className="text-white hover:text-yellow-200 transition-colors font-medium">
+                            Quy Luật Giá Trị
+                        </Link>
+                        <Link href="/game" className="bg-yellow-500 hover:bg-yellow-400 text-red-900 px-4 py-2 rounded-lg font-bold transition-colors shadow-lg">
+                            🎮 Game
+                        </Link>
                         <div className="bg-white/20 rounded-lg px-3 py-1">
                             <span className="text-white text-sm font-medium">
                                 "Tất cả mọi người đều bình đẳng"
@@ -102,6 +108,20 @@ export default function Header() {
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 So Sánh TBCN & XHCN
+                            </Link>
+                            <Link
+                                href="/quy-luat-gia-tri"
+                                className="text-white hover:text-yellow-200 transition-colors font-medium px-2 py-1"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Quy Luật Giá Trị
+                            </Link>
+                            <Link
+                                href="/game"
+                                className="bg-yellow-500 hover:bg-yellow-400 text-red-900 px-4 py-2 rounded-lg font-bold transition-colors text-center"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                🎮 Game
                             </Link>
                             <div className="bg-white/20 rounded-lg px-3 py-2 mt-2">
                                 <span className="text-white text-sm font-medium">

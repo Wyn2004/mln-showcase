@@ -33,7 +33,7 @@ export default function SystemSection({ title, sections, color, images }: System
     : "rgba(161, 98, 7, 0.2)";
 
   return (
-    <section className={`py-16 bg-gradient-to-b ${bgGradient}`}>
+    <section className="py-16 relative">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -43,10 +43,11 @@ export default function SystemSection({ title, sections, color, images }: System
         >
           {/* Title */}
           <div className="text-center mb-12">
-            <h2 className={`text-4xl md:text-5xl font-bold ${textColor} mb-4 inline-block px-8 py-4 border-4 ${borderColor} bg-white`}
+            <h2 className={`text-4xl md:text-5xl font-bold text-amber-50 mb-4 inline-block px-8 py-4 border-2 border-amber-600/50 bg-[#130E07]/90 backdrop-blur-sm`}
               style={{
                 fontFamily: "serif",
-                boxShadow: `8px 8px 0px ${shadowColor}`
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)",
+                textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
               }}>
               {title}
             </h2>
@@ -60,8 +61,8 @@ export default function SystemSection({ title, sections, color, images }: System
                 {images.map((img, idx) => (
                   <CarouselItem key={idx}>
                     <Card
-                      className={`border-8 ${borderColor} bg-transparent p-0 overflow-hidden rounded-2xl`}
-                      style={{ boxShadow: `12px 12px 0px ${shadowColor}`, background: 'transparent' }}
+                      className="border-2 border-amber-700/50 bg-transparent p-0 overflow-hidden rounded-2xl"
+                      style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)", background: 'transparent' }}
                     >
                       <CardContent className="p-0 bg-transparent" style={{ background: 'transparent' }}>
                         {/* larger image: use consistent aspect ratio so images always cover the card */}
@@ -81,8 +82,8 @@ export default function SystemSection({ title, sections, color, images }: System
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className={`border-4 ${borderColor}`} />
-              <CarouselNext className={`border-4 ${borderColor}`} />
+              <CarouselPrevious className="border-2 border-amber-600/50 bg-[#130E07]/90 text-amber-100 hover:bg-[#1a1208]/80" />
+              <CarouselNext className="border-2 border-amber-600/50 bg-[#130E07]/90 text-amber-100 hover:bg-[#1a1208]/80" />
             </Carousel>
           </div>
 
@@ -92,15 +93,15 @@ export default function SystemSection({ title, sections, color, images }: System
               <AccordionItem
                 key={section.id}
                 value={section.id}
-                className={`${bgBox} border-8 ${borderColor} overflow-hidden`}
-                style={{ boxShadow: `10px 10px 0px ${shadowColor}` }}
+                className={`bg-[#130E07]/90 backdrop-blur-sm border-2 border-amber-600/50 overflow-hidden`}
+                style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)" }}
               >
                 <AccordionTrigger
-                  className={`px-6 md:px-8 py-6 hover:no-underline ${accentColor} hover:bg-opacity-50 transition-colors`}
+                  className={`px-6 md:px-8 py-6 hover:no-underline text-amber-100 hover:text-amber-50 hover:bg-[#1a1208]/50 transition-colors`}
                 >
                   <div className="flex items-center gap-4 text-left">
-                    <span className="text-4xl">★</span>
-                    <span className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "serif" }}>
+                    <span className="text-4xl text-amber-300">★</span>
+                    <span className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "serif", textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}>
                       {section.title}
                     </span>
                   </div>
@@ -110,13 +111,13 @@ export default function SystemSection({ title, sections, color, images }: System
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="space-y-4 bg-white p-6 border-4 border-gray-200 rounded-lg"
-                    style={{ boxShadow: `4px 4px 0px ${shadowColor}` }}
+                    className="space-y-4 bg-[#1a1208]/60 p-6 border border-amber-700/30 rounded-lg"
+                    style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.4)" }}
                   >
                     {section.content.map((paragraph, pIndex) => (
                       <div key={pIndex} className="flex items-start">
-                        <span className={`${accentColor} mr-3 mt-1 font-bold text-xl`}>▸</span>
-                        <p className="text-gray-800 leading-relaxed flex-1 text-lg"
+                        <span className={`text-amber-300 mr-3 mt-1 font-bold text-xl`}>▸</span>
+                        <p className="text-amber-100 leading-relaxed flex-1 text-lg"
                           style={{ fontFamily: "serif", textAlign: "justify" }}>
                           {paragraph}
                         </p>

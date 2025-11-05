@@ -5,7 +5,7 @@ import { conclusion } from "../data/data";
 
 export default function ConclusionSection() {
   return (
-    <section className="py-16 bg-gradient-to-b from-red-900 via-red-800 to-amber-900 relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -33,28 +33,21 @@ export default function ConclusionSection() {
               initial={{ scale: 0.9 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-bold text-yellow-300 mb-4 px-8 py-6 border-8 border-yellow-400 bg-red-700/80 backdrop-blur-sm inline-block"
+              className="text-4xl md:text-5xl font-bold text-amber-50 mb-4 px-8 py-6 border-2 border-amber-600/50 bg-[#130E07]/90 backdrop-blur-sm inline-block"
               style={{ 
                 fontFamily: "serif",
-                textShadow: "4px 4px 0px rgba(0,0,0,0.5)",
-                boxShadow: "12px 12px 0px rgba(202, 138, 4, 0.4)"
+                textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)"
               }}>
               {conclusion.title}
             </motion.h2>
           </div>
 
           {/* Content */}
-          <div className="bg-amber-50 border-8 border-yellow-600 p-8 md:p-12 mb-12"
+          <div className="bg-[#130E07]/90 backdrop-blur-sm border-2 border-amber-600/50 p-8 md:p-12 mb-12"
                style={{ 
-                 boxShadow: "16px 16px 0px rgba(161, 98, 7, 0.3)",
-                 backgroundImage: `linear-gradient(rgba(255,251,235,0.95), rgba(255,251,235,0.95)), 
-                                   repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px)`
+                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)"
                }}>
-            
-            {/* Decorative Corners */}
-            <div className="absolute top-0 left-0 w-20 h-20 border-t-8 border-l-8 border-red-700"></div>
-            <div className="absolute bottom-0 right-0 w-20 h-20 border-b-8 border-r-8 border-red-700"></div>
-
             <div className="space-y-6 relative">
               {conclusion.paragraphs.map((paragraph, index) => (
                 <motion.p
@@ -63,7 +56,7 @@ export default function ConclusionSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.15 }}
-                  className="text-lg leading-relaxed text-gray-800"
+                  className="text-lg leading-relaxed text-amber-100"
                   style={{ fontFamily: "serif", textAlign: "justify" }}
                 >
                   {paragraph}
@@ -77,24 +70,20 @@ export default function ConclusionSection() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-yellow-100 to-amber-100 border-8 border-red-700 p-8 md:p-12 relative"
-            style={{ boxShadow: "16px 16px 0px rgba(185, 28, 28, 0.4)" }}
+            className="bg-[#130E07]/90 backdrop-blur-sm border-2 border-amber-600/50 p-8 md:p-12 relative"
+            style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)" }}
           >
-            {/* Quote Marks */}
-            <div className="absolute -top-6 -left-6 text-8xl text-red-700 opacity-50 font-serif">"</div>
-            <div className="absolute -bottom-6 -right-6 text-8xl text-red-700 opacity-50 font-serif">"</div>
-
             {/* Quote Content */}
             <div className="relative z-10">
-              <p className="text-xl md:text-2xl text-red-900 font-bold leading-relaxed mb-6 text-center italic"
-                 style={{ fontFamily: "serif" }}>
+              <p className="text-xl md:text-2xl text-amber-100 font-bold leading-relaxed mb-6 text-center italic"
+                 style={{ fontFamily: "serif", textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}>
                 {conclusion.quote.text}
               </p>
               
               {/* Author */}
               <div className="text-right">
-                <div className="inline-block bg-red-700 text-yellow-100 px-6 py-3 border-4 border-yellow-600"
-                     style={{ boxShadow: "6px 6px 0px rgba(161, 98, 7, 0.3)" }}>
+                <div className="inline-block bg-[#1a1208]/60 text-amber-100 px-6 py-3 border border-amber-600/50"
+                     style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.4)" }}>
                   <p className="text-lg font-bold" style={{ fontFamily: "serif" }}>
                     — {conclusion.quote.author}
                   </p>
@@ -110,10 +99,10 @@ export default function ConclusionSection() {
             viewport={{ once: true }}
             className="mt-12 text-center"
           >
-            <div className="inline-block bg-yellow-400 border-4 border-red-700 px-8 py-4"
-                 style={{ boxShadow: "8px 8px 0px rgba(185, 28, 28, 0.4)" }}>
-              <p className="text-2xl md:text-3xl font-bold text-red-900"
-                 style={{ fontFamily: "serif" }}>
+            <div className="inline-block bg-[#130E07]/90 backdrop-blur-sm border-2 border-amber-600/50 px-8 py-4"
+                 style={{ boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)" }}>
+              <p className="text-2xl md:text-3xl font-bold text-amber-100"
+                 style={{ fontFamily: "serif", textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}>
                 ★ VIỆT NAM TIẾN LÊN ★
               </p>
             </div>
