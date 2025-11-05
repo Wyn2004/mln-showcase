@@ -6,6 +6,7 @@ import TransitionSection from "@/components/home/TransitionSection";
 import IntroductionSection from "@/components/home/IntroductionSection";
 import FeaturesSection from "@/components/home/FeaturesSection";
 import HistoricalSection from "@/components/home/HistoricalSection";
+import VideoSection from "@/components/home/VideoSection";
 import GallerySection from "@/components/home/GallerySection";
 import CallToActionSection from "@/components/home/CallToActionSection";
 
@@ -14,12 +15,12 @@ export default function Home() {
     <div className="min-h-screen relative overflow-hidden">
       {/* Background with image - applied to full page */}
       <div className="fixed inset-0 -z-10">
-        <Image
+                  <Image
           src="/backgroud/bg.jpg"
           alt="Background"
-          fill
+                    fill
           className="object-cover"
-          priority
+                    priority
           quality={100}
         />
         {/* Dark overlay to darken the background */}
@@ -33,6 +34,7 @@ export default function Home() {
       <IntroductionSection />
       <FeaturesSection />
       <HistoricalSection />
+      <VideoSection />
       <GallerySection />
       <CallToActionSection />
     </div>
