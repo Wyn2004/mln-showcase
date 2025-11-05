@@ -119,3 +119,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom Scrollbar for Chat Modal */
+.chat-scrollbar::-webkit-scrollbar,
+.chat-scrollbar-input::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track,
+.chat-scrollbar-input::-webkit-scrollbar-track {
+  background: rgba(19, 14, 7, 0.3);
+  border-radius: 4px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb,
+.chat-scrollbar-input::-webkit-scrollbar-thumb {
+  background: rgba(251, 191, 36, 0.4);
+  border-radius: 4px;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:hover,
+.chat-scrollbar-input::-webkit-scrollbar-thumb:hover {
+  background: rgba(251, 191, 36, 0.6);
+}
+
+.chat-scrollbar::-webkit-scrollbar-corner,
+.chat-scrollbar-input::-webkit-scrollbar-corner {
+  background: rgba(19, 14, 7, 0.3);
+}

@@ -4,6 +4,7 @@ import "./globals.css";
 import SideNavigation from "@/components/layout/SideNavigation";
 import Footer from "@/components/layout/Footer";
 import MusicPlayer from "@/components/layout/MusicPlayer";
+import ChatButton from "@/components/chat/ChatButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <SideNavigation />
         <MusicPlayer />
+        <ChatButton />
         <main className="min-h-screen">
           {children}
         </main>

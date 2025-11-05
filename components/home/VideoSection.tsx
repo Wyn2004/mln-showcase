@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 
 export default function VideoSection() {
-  const videoId = "Mmjun7lZXKY";
+  const videoId = "oQuOjoO-N-k";
 
   return (
     <section className="py-16 md:py-24 relative">
