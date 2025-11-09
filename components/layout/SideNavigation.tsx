@@ -11,6 +11,7 @@ import {
     Scale,
     BookOpen,
     Gamepad2,
+    Sparkles,
     Menu,
     X
 } from "lucide-react";
@@ -22,6 +23,7 @@ const navigationItems = [
     { path: "/so-sanh-tbcn-xhcn", icon: Scale, label: "So Sánh TBCN & XHCN" },
     { path: "/quy-luat-gia-tri", icon: BookOpen, label: "Quy Luật Giá Trị" },
     { path: "/game", icon: Gamepad2, label: "Game" },
+    { path: "/su-dung-ai", icon: Sparkles, label: "Sử Dụng AI" },
 ];
 
 export default function SideNavigation() {
