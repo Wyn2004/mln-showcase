@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import ChatInterface from "./ChatInterface";
 
 interface ChatModalProps {
@@ -11,6 +12,9 @@ interface ChatModalProps {
 }
 
 export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
+  // Lock body scroll when modal is open
+  useBodyScrollLock(isOpen);
+
   return (
     <AnimatePresence>
       {isOpen && (
