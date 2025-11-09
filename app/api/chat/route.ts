@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { embedder } from "@/lib/embed";
 import { supabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
@@ -12,7 +13,7 @@ export function buildPrompt(
     .join("\n");
 
   return `
-🎓 Vai trò:
+Vai trò:
 Bạn là **trợ lý ảo thông minh, thân thiện và học thuật**,
 chuyên giải thích các khái niệm, quy luật, phạm trù trong **Kinh tế Chính trị Mác – Lênin**.
 Bạn có khả năng diễn đạt tự nhiên, mạch lạc và giàu cảm xúc, giúp sinh viên hiểu sâu vấn đề.
@@ -33,7 +34,7 @@ Quy tắc nội dung:
    - Sau đó gợi ý quay lại đúng chủ đề, ví dụ:
      > “Câu hỏi này khá thú vị! Tuy nhiên, lĩnh vực đó nằm ngoài phạm vi Kinh tế Chính trị Mác – Lênin. Bạn muốn mình giải thích về khía cạnh kinh tế - xã hội tương ứng không?”
 
-🧩 Dữ liệu cuộc trò chuyện trước:
+Dữ liệu cuộc trò chuyện trước:
 ${his ? his + "\n" : "(chưa có)"}
 
 CONTEXT từ tài liệu:
@@ -42,6 +43,30 @@ ${context}
 CÂU HỎI MỚI:
 ${question}
   `.trim();
+}
+
+async function callGeminiWithRetry(url: string, payload: any, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) return await res.json();
+
+    const text = await res.text();
+    console.error(`Gemini API error (attempt ${attempt}):`, text);
+
+    if (res.status === 429 && attempt < retries) {
+      const delay = 2000 * attempt;
+      console.log(`Waiting ${delay / 1000}s before retry...`);
+      await new Promise((r) => setTimeout(r, delay));
+      continue;
+    }
+
+    throw new Error(`Gemini API failed: ${text}`);
+  }
 }
 
 export async function POST(req: Request) {
@@ -87,35 +112,15 @@ export async function POST(req: Request) {
 
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GOOGLE_API_KEY}`;
 
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: prompt }],
-          },
-        ],
-      }),
+    const json = await callGeminiWithRetry(endpoint, {
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
     });
 
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("Gemini API error:", text);
-      return NextResponse.json(
-        { error: "Lỗi khi gọi AI API" },
-        { status: 500 }
-      );
-    }
-
-    const json = await res.json();
     const answer =
       json?.candidates?.[0]?.content?.parts
-        ?.map((p: { text: string }) => p?.text)
+        ?.map((p: { text: string }) => p.text)
         .join("\n")
-        .trim() ||
-      "Xin lỗi, tôi không thể tạo câu trả lời lúc này. Vui lòng thử lại.";
+        .trim() || "Xin lỗi, tôi chưa có dữ liệu phù hợp để trả lời.";
 
     return NextResponse.json({
       answer,
