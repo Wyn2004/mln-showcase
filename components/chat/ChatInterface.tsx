@@ -9,6 +9,8 @@ import {
   Bot,
   User,
   MessageSquare,
+  Menu,
+  X,
 } from "lucide-react";
 import {
   createSession,
@@ -22,6 +24,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function ChatInterface() {
   const [sessions, setSessions] = useState<ChatSession[]>([]);
@@ -29,6 +33,7 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -168,70 +173,159 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex h-screen bg-white dark:bg-gray-900">
-      {/* Sidebar */}
-      <div className="w-64 bg-gray-900 text-white flex flex-col border-r border-gray-700">
-        <div className="p-3">
-          <Button
-            onClick={handleNewChat}
-            className="w-full bg-transparent border border-gray-600 hover:bg-gray-800 text-white justify-start"
-            size="sm"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Chat mới
-          </Button>
-        </div>
-
-        <ScrollArea className="flex-1 px-2">
-          <div className="space-y-1">
-            {sessions.map((session) => (
-              <div
-                key={session.id}
-                className={cn(
-                  "group flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-gray-800 transition-colors",
-                  currentSessionId === session.id && "bg-gray-800"
-                )}
-                onClick={() => setCurrentSessionId(session.id)}
-              >
-                <MessageSquare className="w-4 h-4 shrink-0 text-gray-400" />
-                <span className="text-sm truncate flex-1">{session.title}</span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteSession(session.id);
-                  }}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-gray-700 rounded"
+    <div className="flex h-screen bg-[#0a0604] overflow-hidden relative">
+      {/* Sidebar - Collapsible */}
+      <div
+        className={cn(
+          "bg-[#130E07]/95 backdrop-blur-sm border-r-2 border-amber-700/30 flex flex-col transition-all duration-300 absolute md:relative z-20 h-full",
+          sidebarOpen
+            ? "w-72 translate-x-0"
+            : "w-0 -translate-x-full md:translate-x-0 md:w-16"
+        )}
+      >
+        {/* Header */}
+        <div
+          className={cn(
+            "p-4 border-b-2 border-amber-700/30 transition-all",
+            !sidebarOpen && "md:p-2"
+          )}
+        >
+          {sidebarOpen ? (
+            <>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-amber-700/30 flex items-center justify-center border-2 border-amber-600/50">
+                  <Bot className="w-6 h-6 text-amber-400" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-lg font-bold text-amber-100">
+                    Trợ Lý AI
+                  </h2>
+                  <p className="text-xs text-amber-300/70">
+                    Kinh Tế Chính Trị ML
+                  </p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setSidebarOpen(false)}
+                  className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/30 shrink-0"
                 >
-                  <Trash2 className="w-3.5 h-3.5 text-gray-400 hover:text-red-400" />
-                </button>
+                  <X className="w-5 h-5" />
+                </Button>
               </div>
-            ))}
-          </div>
-        </ScrollArea>
 
-        <div className="p-3 border-t border-gray-700">
-          <div className="text-xs text-gray-400 text-center">
-            Trợ lý Kinh tế Chính trị ML
-          </div>
+              <Button
+                onClick={handleNewChat}
+                className="w-full bg-amber-700/80 hover:bg-amber-600 text-amber-50 border border-amber-600/50 transition-all"
+                size="sm"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Tạo Chat Mới
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(true)}
+              className="w-full text-amber-400 hover:text-amber-300 hover:bg-amber-900/30"
+            >
+              <Menu className="w-5 h-5" />
+            </Button>
+          )}
         </div>
+
+        {/* Sessions List */}
+        {sidebarOpen && (
+          <>
+            <ScrollArea className="flex-1 px-3 py-2">
+              <div className="space-y-1.5">
+                {sessions.length === 0 ? (
+                  <div className="text-center py-8 px-4">
+                    <MessageSquare className="w-12 h-12 text-amber-700/50 mx-auto mb-3" />
+                    <p className="text-sm text-amber-300/60">
+                      Chưa có cuộc trò chuyện nào
+                    </p>
+                  </div>
+                ) : (
+                  sessions.map((session) => (
+                    <div
+                      key={session.id}
+                      className={cn(
+                        "group flex items-center gap-2.5 p-3 rounded-lg cursor-pointer transition-all border",
+                        currentSessionId === session.id
+                          ? "bg-amber-700/40 border-amber-600/60 shadow-lg"
+                          : "bg-[#1a1208]/60 border-amber-700/20 hover:bg-amber-700/20 hover:border-amber-600/40"
+                      )}
+                      onClick={() => setCurrentSessionId(session.id)}
+                    >
+                      <MessageSquare className="w-4 h-4 shrink-0 text-amber-400/80" />
+                      <span className="text-sm truncate flex-1 text-amber-100/90">
+                        {session.title}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteSession(session.id);
+                        }}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-red-900/50 rounded border border-transparent hover:border-red-700/50"
+                        title="Xóa chat"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 text-amber-400/80 hover:text-red-400" />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </ScrollArea>
+
+            {/* Footer */}
+            <div className="p-4 border-t-2 border-amber-700/30">
+              <div className="text-xs text-amber-300/50 text-center leading-relaxed">
+                Tổng:{" "}
+                <span className="text-amber-400 font-semibold">
+                  {sessions.length}
+                </span>{" "}
+                cuộc trò chuyện
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col bg-linear-to-br from-[#0a0604] via-[#130E07] to-[#0a0604]">
+        {/* Header with toggle button for mobile */}
+        {!sidebarOpen && (
+          <div className="md:hidden p-4 border-b border-amber-700/30">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(true)}
+              className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/30"
+            >
+              <Menu className="w-6 h-6" />
+            </Button>
+          </div>
+        )}
+
         {/* Messages */}
         <ScrollArea className="flex-1">
-          <div className="max-w-3xl mx-auto px-4 py-6">
+          <div className="max-w-4xl mx-auto px-6 py-8">
             {messages.length === 0 && (
-              <div className="flex flex-col items-center justify-center h-full text-center py-20">
-                <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
-                  <Bot className="w-8 h-8 text-gray-600 dark:text-gray-400" />
+              <div className="flex flex-col items-center justify-center h-full text-center py-24">
+                <div className="w-20 h-20 bg-amber-700/20 rounded-full flex items-center justify-center mb-6 border-2 border-amber-600/40 shadow-2xl">
+                  <Bot className="w-10 h-10 text-amber-400" />
                 </div>
-                <h2 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
-                  Trợ lý Kinh tế Chính trị Mác - Lênin
+                <h2
+                  className="text-3xl font-bold mb-3 text-amber-100"
+                  style={{ fontFamily: "serif" }}
+                >
+                  Trợ Lý Kinh Tế Chính Trị Mác - Lênin
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 max-w-md">
-                  Hãy đặt câu hỏi về kinh tế chính trị, giá trị, hàng hóa, lao
-                  động, tư bản... để bắt đầu
+                <p className="text-amber-200/70 max-w-xl text-lg leading-relaxed">
+                  Hãy đặt câu hỏi về giá trị, hàng hóa, lao động, tư bản, chủ
+                  nghĩa, giai cấp, sản xuất, thặng dư, phân phối thu nhập...
                 </p>
               </div>
             )}
@@ -240,42 +334,106 @@ export default function ChatInterface() {
               <div
                 key={index}
                 className={cn(
-                  "flex gap-4 mb-6",
+                  "flex gap-4 mb-6 animate-in fade-in slide-in-from-bottom-4 duration-300",
                   message.role === "user" ? "justify-end" : "justify-start"
                 )}
               >
                 {message.role === "assistant" && (
-                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center shrink-0">
-                    <Bot className="w-5 h-5 text-white" />
+                  <div className="w-9 h-9 bg-amber-700/40 rounded-full flex items-center justify-center shrink-0 border-2 border-amber-600/50 shadow-lg mt-1">
+                    <Bot className="w-5 h-5 text-amber-300" />
                   </div>
                 )}
                 <div
                   className={cn(
-                    "max-w-[75%] rounded-2xl px-4 py-3",
+                    "max-w-[75%] rounded-2xl px-5 py-3.5 shadow-xl border-2",
                     message.role === "user"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      ? "bg-amber-700/70 text-amber-50 border-amber-600/60 backdrop-blur-sm"
+                      : "bg-[#1a1208]/80 text-amber-100 border-amber-700/30 backdrop-blur-md prose prose-invert prose-amber max-w-none"
                   )}
                 >
-                  <p className="whitespace-pre-wrap leading-relaxed text-[15px]">
-                    {message.content}
-                  </p>
+                  {message.role === "assistant" ? (
+                    <div className="text-[15px] leading-relaxed">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          p: ({ children }) => (
+                            <p className="mb-3 last:mb-0">{children}</p>
+                          ),
+                          ul: ({ children }) => (
+                            <ul className="mb-3 ml-4 list-disc">{children}</ul>
+                          ),
+                          ol: ({ children }) => (
+                            <ol className="mb-3 ml-4 list-decimal">
+                              {children}
+                            </ol>
+                          ),
+                          li: ({ children }) => (
+                            <li className="mb-1">{children}</li>
+                          ),
+                          strong: ({ children }) => (
+                            <strong className="text-amber-50 font-semibold">
+                              {children}
+                            </strong>
+                          ),
+                          em: ({ children }) => (
+                            <em className="text-amber-200/90">{children}</em>
+                          ),
+                          code: ({ children }) => (
+                            <code className="bg-amber-900/30 px-1.5 py-0.5 rounded text-amber-200 text-sm">
+                              {children}
+                            </code>
+                          ),
+                          pre: ({ children }) => (
+                            <pre className="bg-amber-900/30 p-3 rounded-lg overflow-x-auto mb-3">
+                              {children}
+                            </pre>
+                          ),
+                          h1: ({ children }) => (
+                            <h1 className="text-xl font-bold mb-3 text-amber-50">
+                              {children}
+                            </h1>
+                          ),
+                          h2: ({ children }) => (
+                            <h2 className="text-lg font-bold mb-2 text-amber-50">
+                              {children}
+                            </h2>
+                          ),
+                          h3: ({ children }) => (
+                            <h3 className="text-base font-semibold mb-2 text-amber-100">
+                              {children}
+                            </h3>
+                          ),
+                          blockquote: ({ children }) => (
+                            <blockquote className="border-l-4 border-amber-700/50 pl-4 italic text-amber-200/80 my-3">
+                              {children}
+                            </blockquote>
+                          ),
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p className="whitespace-pre-wrap leading-relaxed text-[15px]">
+                      {message.content}
+                    </p>
+                  )}
                 </div>
                 {message.role === "user" && (
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center shrink-0">
-                    <User className="w-5 h-5 text-white" />
+                  <div className="w-9 h-9 bg-amber-600/60 rounded-full flex items-center justify-center shrink-0 border-2 border-amber-500/70 shadow-lg mt-1">
+                    <User className="w-5 h-5 text-amber-100" />
                   </div>
                 )}
               </div>
             ))}
 
             {isLoading && (
-              <div className="flex gap-4 mb-6">
-                <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center shrink-0">
-                  <Bot className="w-5 h-5 text-white" />
+              <div className="flex gap-4 mb-6 animate-in fade-in duration-300">
+                <div className="w-9 h-9 bg-amber-700/40 rounded-full flex items-center justify-center shrink-0 border-2 border-amber-600/50">
+                  <Bot className="w-5 h-5 text-amber-300" />
                 </div>
-                <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl px-4 py-3">
-                  <Loader2 className="w-5 h-5 animate-spin text-gray-600 dark:text-gray-400" />
+                <div className="bg-[#1a1208]/80 border-2 border-amber-700/30 rounded-2xl px-5 py-3.5 backdrop-blur-md">
+                  <Loader2 className="w-5 h-5 animate-spin text-amber-400" />
                 </div>
               </div>
             )}
@@ -285,16 +443,16 @@ export default function ChatInterface() {
         </ScrollArea>
 
         {/* Input Area */}
-        <div className="border-t dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="relative flex items-end gap-2 bg-gray-100 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 focus-within:border-blue-500 transition-colors">
+        <div className="border-t-2 border-amber-700/30 bg-[#130E07]/90 backdrop-blur-md p-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="relative flex items-end gap-3 bg-[#1a1208]/60 rounded-2xl border-2 border-amber-700/40 focus-within:border-amber-600/70 transition-all shadow-2xl backdrop-blur-sm">
               <textarea
                 ref={textareaRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
-                placeholder="Nhập câu hỏi của bạn..."
-                className="flex-1 bg-transparent px-4 py-3 text-gray-900 dark:text-gray-100 placeholder-gray-500 focus:outline-none resize-none max-h-[200px] min-h-[52px]"
+                placeholder="Nhập câu hỏi của bạn về Kinh Tế Chính Trị..."
+                className="flex-1 bg-transparent px-5 py-4 text-amber-100 placeholder-amber-400/50 focus:outline-none resize-none max-h-[200px] min-h-14"
                 disabled={isLoading}
                 rows={1}
               />
@@ -302,7 +460,7 @@ export default function ChatInterface() {
                 onClick={handleSendMessage}
                 disabled={!input.trim() || isLoading}
                 size="icon"
-                className="m-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="m-2.5 bg-amber-700/80 hover:bg-amber-600 text-amber-50 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed border border-amber-600/50 shadow-lg transition-all"
               >
                 {isLoading ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -311,8 +469,16 @@ export default function ChatInterface() {
                 )}
               </Button>
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-2">
-              Nhấn Enter để gửi, Shift + Enter để xuống dòng
+            <p className="text-xs text-amber-300/50 text-center mt-3">
+              Nhấn{" "}
+              <kbd className="px-1.5 py-0.5 bg-amber-900/40 border border-amber-700/40 rounded text-amber-300">
+                Enter
+              </kbd>{" "}
+              để gửi,
+              <kbd className="px-1.5 py-0.5 bg-amber-900/40 border border-amber-700/40 rounded text-amber-300 ml-1">
+                Shift + Enter
+              </kbd>{" "}
+              để xuống dòng
             </p>
           </div>
         </div>
